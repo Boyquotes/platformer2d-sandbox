@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Player
+
 
 export var gravity = 300
 export var speed = 180
@@ -39,5 +41,17 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("move_jump"):
 		if is_on_floor():
 			velocity.y -= jump_speed
-	
-	
+
+
+func _ready():
+	add_to_group('Player')
+
+
+func capture_life():
+	GameState.lives_count += 1
+	print('Current lives: ' + str(GameState.lives_count))
+
+
+func capture_diamond():
+	GameState.diamonds_count += 1
+	print('Current diamonds: ' + str(GameState.diamonds_count))
