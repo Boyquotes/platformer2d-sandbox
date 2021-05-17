@@ -9,6 +9,7 @@ export var jump_speed = 200
 
 
 var velocity = Vector2.ZERO
+var health = 100
 
 
 onready var ASprite = $AnimatedSprite
@@ -55,3 +56,11 @@ func capture_life():
 func capture_diamond():
 	GameState.diamonds_count += 1
 	print('Current diamonds: ' + str(GameState.diamonds_count))
+
+
+func hurt(damage):
+	if health > damage:
+		health -= damage
+		print('Player health: '+str(health))
+	else:
+		print('I am dead')
