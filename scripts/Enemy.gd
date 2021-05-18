@@ -10,6 +10,7 @@ export var can_move = true
 var health = 100
 var target: Player = null
 var motion: Vector2
+var is_moving: bool = false
 
 onready var DetectionRaycast: RayCast2D
 onready var AttackTimer:Timer
@@ -61,6 +62,7 @@ func chase_player(delta):
 	var direction = motion.direction_to(target.position) * speed
 	motion.x = -(direction.x)
 	motion.y = 0
+	is_moving = true
 	do_on_move()
 	move_and_slide(motion)
 
@@ -77,16 +79,14 @@ func _physics_process(delta):
 	if DetectionRaycast.is_colliding():
 		var collider = DetectionRaycast.get_collider()
 		if collider is Player:
-			
 			if not target:
 				var p = collider as Player
 				target = p
-			
 			if AttackTimer.is_stopped():
 				AttackTimer.start()
+			if can_move and target:
+					chase_player(delta)
 	else:
 		target = null
 		AttackTimer.stop()
-	
-	if can_move:
-		chase_player(delta)
+		is_moving = false
