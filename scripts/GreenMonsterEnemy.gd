@@ -14,7 +14,7 @@ onready var ASprite = $AnimatedSprite
 onready var DetectionRaycast = $DetectionRaycast
 onready var AttackRaycast = $AttackRaycast
 onready var AttackTimer = $AttackTimer
-
+onready var Healthbar = $Healthbar
 
 func follow_player(delta):
 	if not can_attack:
@@ -55,3 +55,16 @@ func attack():
 
 func _on_AttackTimer_timeout():
 	attack()
+
+
+func hurt(dmg):
+	if health >= dmg:
+		health -= dmg
+		Healthbar.value = health
+	else:
+		print('I dead')
+		queue_free()
+
+
+func _ready():
+	add_to_group('Enemies')

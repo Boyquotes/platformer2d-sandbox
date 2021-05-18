@@ -1,0 +1,77 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scripts/GreenMonsterEnemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/green_monster_walk5.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/green_monster_idle1.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/green_monster_walk8.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/green_monster_walk6.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/green_monster_idle8.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/green_monster_walk4.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/green_monster_walk3.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/green_monster_idle2.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/green_monster_idle4.png" type="Texture" id=10]
+[ext_resource path="res://assets/sprites/green_monster_idle6.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/green_monster_walk1.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/green_monster_idle7.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/green_monster_idle5.png" type="Texture" id=14]
+[ext_resource path="res://assets/sprites/green_monster_walk7.png" type="Texture" id=15]
+[ext_resource path="res://assets/sprites/green_monster_walk2.png" type="Texture" id=16]
+[ext_resource path="res://assets/sprites/green_monster_idle3.png" type="Texture" id=17]
+[ext_resource path="res://assets/sprites/ui_healthbar_enemy_empty.png" type="Texture" id=18]
+[ext_resource path="res://assets/sprites/ui_healthbar_enemy_full.png" type="Texture" id=19]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 17 ), ExtResource( 10 ), ExtResource( 14 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "idle",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 16 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 15 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 36.8442
+
+[node name="GreenMonsterEnemy" type="KinematicBody2D"]
+position = Vector2( 898.484, 210.224 )
+collision_layer = 8
+collision_mask = 15
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.2, 0.2 )
+frames = SubResource( 3 )
+animation = "idle"
+frame = 5
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )
+
+[node name="DetectionRaycast" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( -150, 0 )
+
+[node name="AttackRaycast" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( -50, 0 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="Healthbar" type="TextureProgress" parent="."]
+margin_left = -96.0
+margin_top = -108.0
+margin_right = 94.0
+margin_bottom = -59.0
+value = 100.0
+texture_under = ExtResource( 18 )
+texture_progress = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
