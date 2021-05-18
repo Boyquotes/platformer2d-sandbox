@@ -15,6 +15,9 @@ var is_moving: bool = false
 onready var DetectionRaycast: RayCast2D
 onready var AttackTimer:Timer
 
+func do_on_idle():
+	pass
+
 
 func do_on_move():
 	pass
@@ -65,7 +68,6 @@ func chase_player(delta):
 	motion.x = -(direction.x)
 	motion.y = 0
 	is_moving = true
-	do_on_move()
 	move_and_slide(motion)
 
 
@@ -92,3 +94,8 @@ func _physics_process(delta):
 		target = null
 		AttackTimer.stop()
 		is_moving = false
+		
+	if is_moving:
+		do_on_move()
+	else:
+		do_on_idle()

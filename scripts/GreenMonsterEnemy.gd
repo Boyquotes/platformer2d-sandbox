@@ -1,7 +1,5 @@
 extends "res://scripts/Enemy.gd"
 
-var can_attack:bool = false
-
 onready var ASprite = $AnimatedSprite
 onready var AttackRaycast = $AttackRaycast
 onready var Healthbar = $Healthbar
@@ -18,8 +16,9 @@ func do_on_hurt():
 	Healthbar.value = health
 
 
-#func do_on_move():
-#	if is_moving:
-#		ASprite.play('walk')
-#	else:
-#		ASprite.play('idle')
+func do_on_move():
+	ASprite.play('walk')
+
+
+func do_on_idle():
+	ASprite.play('idle')
