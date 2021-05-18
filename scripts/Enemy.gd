@@ -47,6 +47,8 @@ func _ready():
 	AttackTimer.set_wait_time(attack_interval)
 	AttackTimer.connect("timeout", self, "attack")
 	add_child(AttackTimer)
+	
+	add_to_group('Enemies')
 
 func die():
 	do_on_die()
