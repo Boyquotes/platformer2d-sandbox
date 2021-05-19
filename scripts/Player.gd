@@ -5,14 +5,19 @@ class_name Player
 const ATTACK_DISTANCE = 50
 const ATTACK_STRENGTH = 10
 const BLOCK_STRENGTH = 0.1
+const RUN_SPEED = 300
+const NORM_SPEED = 100
 
+export var jump_speed = 200
 export var gravity = 300
 export var speed = 180
-export var jump_speed = 200
+
 
 var velocity = Vector2.ZERO
 var health = 100
 var is_blocked = false
+var is_running = false
+var can_run = false
 
 onready var ASprite = $AnimatedSprite
 onready var AttackRaycast = $AttackRaycast
@@ -29,6 +34,13 @@ func _physics_process(delta):
 		is_blocked = false
 	
 	if not is_blocked:
+#		if Input.is_action_pressed("run") and can_run:
+#			is_running = true
+#		else:
+#			is_running = false
+		
+		var speed = RUN_SPEED if (Input.is_action_pressed("run") and can_run) else NORM_SPEED
+		
 		if Input.is_action_pressed("move_left"):
 			velocity.x -= speed
 		if Input.is_action_pressed("move_right"):
@@ -50,6 +62,7 @@ func _physics_process(delta):
 			ASprite.play("idle")
 	
 	velocity.y += gravity * delta
+	
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	if Input.is_action_just_pressed("move_jump"):
