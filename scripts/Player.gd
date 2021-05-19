@@ -16,7 +16,6 @@ var is_blocked = false
 
 onready var ASprite = $AnimatedSprite
 onready var AttackRaycast = $AttackRaycast
-onready var Healthbar = $Healthbar
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("attack"):
@@ -98,4 +97,4 @@ func attack():
 					target.hurt(ATTACK_STRENGTH)
 
 func update_ui():
-	Healthbar.value = health
+	get_tree().call_group('UI', 'display_health', health)
