@@ -10,7 +10,6 @@ export var gravity = 300
 export var speed = 180
 export var jump_speed = 200
 
-
 var velocity = Vector2.ZERO
 var health = 100
 var is_blocked = false
@@ -100,7 +99,3 @@ func attack():
 
 func update_ui():
 	Healthbar.value = health
-
-
-#func block():
-#	can_move = false
