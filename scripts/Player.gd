@@ -7,6 +7,7 @@ const ATTACK_STRENGTH = 10
 const BLOCK_STRENGTH = 0.1
 const RUN_SPEED = 300
 const NORM_SPEED = 100
+const CLIMB_SPEED = 50
 
 export var jump_speed = 200
 export var gravity = 300
@@ -18,6 +19,8 @@ var health = 100
 var is_blocked = false
 var is_running = false
 var can_run = false
+var is_climbing = false
+
 
 onready var ASprite = $AnimatedSprite
 onready var AttackRaycast = $AttackRaycast
@@ -61,7 +64,20 @@ func _physics_process(delta):
 		else:
 			ASprite.play("idle")
 	
-	velocity.y += gravity * delta
+	if not is_climbing:
+		velocity.y += gravity * delta
+#		velocity = move_and_slide(velocity, Vector2.UP)
+		print('I am not climbing')
+	else:
+		print('I am climbing')
+		velocity.y = 0
+#		velocity = move_and_slide(velocity)
+	
+	if is_climbing:
+		if Input.is_action_pressed("move_up"):
+			velocity.y -= CLIMB_SPEED
+		if Input.is_action_pressed("move_down"):
+			velocity.y += CLIMB_SPEED
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
